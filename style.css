@@ -1,0 +1,69 @@
+html *
+{
+    color: #000;
+    text-align: center;
+    font-size: 4.5rem;
+}
+.frontbox
+{
+    float: left;
+    width: 100%;
+    border-bottom: 0.6rem solid #000;
+}
+.frontbox .clockbox
+{
+    text-align: left;
+    font-size: 11rem;
+    width: calc(50% - 0.6rem);
+    font-weight: bold;
+    border-right: 0.6rem solid #000;
+    padding-right: 3rem;
+}
+.frontbox .daybox
+{
+    position: relative;
+    display: inline-flex;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-left: 4rem;
+}
+.datebox
+{
+    clear: both;
+    border-bottom: 0.6rem solid #000;
+}
+.hebbox
+{
+    border-left: 0.6rem solid #000;
+    padding-left: 1rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.eventbox
+{
+    line-height: 5rem;
+    border-bottom: 0.6rem solid #000;
+}
+@media screen and (max-width: 51em)
+{
+    .frontbox .clockbox
+    {
+        padding: 0rem;
+        border-right: none;
+    }
+    .frontbox .daybox
+    {
+        display: flex;
+        padding-left: 0rem;
+        padding-bottom: 1rem;
+    }
+    .hebbox
+    {
+        border-left: none;
+        padding-left: none;
+        display: flex;
+    }
+}
