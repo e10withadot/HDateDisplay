@@ -2,6 +2,14 @@ var d = new Date(), interval= 60000-(d.getSeconds()*1000+d.getMilliseconds());
 var events = [];
 var cycle = 0;
 
+const event_container = document.getElementById('evcon');
+var display = 3;
+for (let index = 0; index < display; index++) {
+  var event = document.createElement('div');
+  event.classList.add('eventbox');
+  event_container.appendChild(event);
+}
+
 function getClock(){
   d= new Date();
   var nday=d.getDay(),nmonth=d.getMonth()+1,ndate=d.getDate(),nyear=d.getFullYear();
@@ -42,20 +50,20 @@ function getClock(){
 
   var parasha = weeklyParasha(findShabbat(d));
   var suntimes = "<b>זריחה:</b> "+msToTime(sunrise)+" <b>שקיעה:</b> "+msToTime(sunset);
+  var shabbattimes = "<b>כניסת שבת: </b> "+msToTime(sunset-1200000)+" <b>צאת שבת: </b> "+msToTime(sunset+2400000);
   var holiday = holidays(dateH);
   var omer = omerCount(dateH);
   events = [parasha, suntimes, holiday, omer];
 }
 
 function swapEvents(){
-  var sets = Math.floor(events.length / 2);
-  var index = (cycle % sets) * 2;
-  var event1 = events[index];
-  var event2 = events[index+1];
-  if(event1 == "" && event2 == "")
-    return;
-  if(event1 != "") document.getElementById('event1').innerHTML=event1;
-  if(event2 != "") document.getElementById('event2').innerHTML=event2;
+  var sets = Math.floor(events.length / display);
+  var index = (cycle % sets) * display;
+  var elemts = Array.from(event_container.children);
+  for(var i = 0; i < display*sets; i++) {
+    if(events[i] != "")
+      elemts[i].innerHTML=events[i];
+  }
   cycle = (cycle + 1) % sets;
 }
 
