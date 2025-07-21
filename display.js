@@ -11,11 +11,10 @@ for (let index = 0; index < display; index++) {
 }
 
 function getClock(){
-  d= new Date();
+  d = new Date();
   var nday=d.getDay(),nmonth=d.getMonth()+1,ndate=d.getDate(),nyear=d.getFullYear();
   var nhour=d.getHours(),nmin=d.getMinutes(),ap;
 
-  //<script type="text/javascript">
   //var tday=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   var tday=["ראשון","שני","שלישי","רביעי","חמישי","שישי","שבת"];
   var tmonth=["ינואר","פבואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר"];
@@ -26,10 +25,15 @@ function getClock(){
   else if(nhour==12){ap=" אחרי הצהריים";}
   else if(nhour>12){ap=" א";nhour-=12;}
   */
-
+  var sunrise= getSunrise(32.09253, 34.89864, d);
+  var sunset= getSunset(32.09253, 34.89864, d);
+  var stars = sunset.getTime()+2400000;
+  
   var clocktext=nhour+":"+twoDigit(nmin);
   var daytext="יום "+tday[nday];
-  var dateH= gregToHeb(new Date(nyear, nmonth-1, ndate+1));
+  var datemod = 1;
+  if (stars < d.getTime()) datemod++;
+  var dateH= gregToHeb(new Date(nyear, nmonth-1, ndate+datemod));
   var datetextH=formatDateH(dateH);
   var datetext=ndate+"/"+nmonth+"/"+nyear;
 
@@ -45,15 +49,13 @@ function getClock(){
   document.getElementById('heb').innerHTML=datetextH;
   document.getElementById('greg').innerHTML=datetext;
 
-  var sunrise= getSunrise(32.09253, 34.89864, d);
-  var sunset= getSunset(32.09253, 34.89864, d);
 
   var parasha = weeklyParasha(findShabbat(d));
   var holiday = holidays(dateH);
   var omer = omerCount(dateH);
   var times;
   if (nday == 5 || nday == 6)
-    times = "<b>כניסת שבת:</b> "+msToTime(sunset.getTime()-1200000)+" <b>צאת שבת:</b> "+msToTime(sunset.getTime()+2400000);
+    times = "<b>כניסת שבת:</b> "+msToTime(sunset.getTime()-1200000)+" <b>צאת שבת:</b> "+msToTime(stars);
     else times = "<b>זריחה:</b> "+msToTime(sunrise)+" <b>שקיעה:</b> "+msToTime(sunset);
   events = [parasha, times, holiday, omer];
 }
