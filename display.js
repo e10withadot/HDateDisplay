@@ -3,7 +3,7 @@ var events = [];
 var cycle = 0;
 
 const event_container = document.getElementById('evcon');
-var display = 3;
+var display = 2;
 for (let index = 0; index < display; index++) {
   var event = document.createElement('div');
   event.classList.add('eventbox');
@@ -58,11 +58,10 @@ function getClock(){
 
 function swapEvents(){
   var sets = Math.floor(events.length / display);
-  var index = (cycle % sets) * display;
   var elemts = Array.from(event_container.children);
-  for(var i = 0; i < display*sets; i++) {
+  for(let i = cycle*display; i < (cycle+1)*display; i++) {
     if(events[i] != "")
-      elemts[i].innerHTML=events[i];
+      elemts[i % display].innerHTML=events[i];
   }
   cycle = (cycle + 1) % sets;
 }
@@ -194,10 +193,8 @@ function checkHDate(dateH, log){
   var month = dateH[0];
   var day = dateH[1];
 
-  if(month in log){
-    if(day in log[month])
+  if(month in log && day in log[month])
       return log[month][day];
-  }
   return "";
 }
 
