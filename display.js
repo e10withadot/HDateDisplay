@@ -25,8 +25,10 @@ function getClock(){
   else if(nhour==12){ap=" אחרי הצהריים";}
   else if(nhour>12){ap=" א";nhour-=12;}
   */
-  var sunrise= getSunrise(32.09253, 34.89864, d);
-  var sunset= getSunset(32.09253, 34.89864, d);
+  var latitude = coordinates['תל אביב']['latitude'];
+  var longitude = coordinates['תל אביב']['longitude'];
+  var sunrise= getSunrise(latitude, longitude, d);
+  var sunset= getSunset(latitude, longitude, d);
   var stars = sunset.getTime()+2400000;
   
   var clocktext=nhour+":"+twoDigit(nmin);
@@ -48,7 +50,6 @@ function getClock(){
   document.getElementById('day').innerHTML=daytext;
   document.getElementById('heb').innerHTML=datetextH;
   document.getElementById('greg').innerHTML=datetext;
-
 
   var parasha = weeklyParasha(findShabbat(d));
   var holiday = holidays(dateH);

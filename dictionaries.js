@@ -57,6 +57,24 @@ var holidayData = {
     9: 'תשעה באב'
   }
 };
+var coordinates = {
+  'תל אביב': {
+    'latitude': 32.08088,
+    'longitude': 34.78057,
+  },
+  'ירושלים': {
+    'latitude': 31.7648,
+    'longitude': 35.2137,
+  },
+  'אילת': {
+    'latitude': 29.5577,
+    'longitude': 34.9519,
+  },
+  'חיפה': {
+    'latitude': 32.7940,
+    'longitude': 34.9896,
+  },
+}
 /* 
   Sixteen year configurations, represented by 3-4 characters.
   For char 1 and 3:
