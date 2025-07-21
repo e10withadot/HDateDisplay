@@ -49,20 +49,21 @@ function getClock(){
   var sunset= getSunset(32.09253, 34.89864, d);
 
   var parasha = weeklyParasha(findShabbat(d));
-  var suntimes = "<b>זריחה:</b> "+msToTime(sunrise)+" <b>שקיעה:</b> "+msToTime(sunset);
-  var shabbattimes = "<b>כניסת שבת: </b> "+msToTime(sunset-1200000)+" <b>צאת שבת: </b> "+msToTime(sunset+2400000);
   var holiday = holidays(dateH);
   var omer = omerCount(dateH);
-  events = [parasha, suntimes, holiday, omer];
+  var times;
+  if (nday == 5 || nday == 6)
+    times = "<b>כניסת שבת:</b> "+msToTime(sunset.getTime()-1200000)+" <b>צאת שבת:</b> "+msToTime(sunset.getTime()+2400000);
+    else times = "<b>זריחה:</b> "+msToTime(sunrise)+" <b>שקיעה:</b> "+msToTime(sunset);
+  events = [parasha, times, holiday, omer];
 }
 
 function swapEvents(){
   var sets = Math.floor(events.length / display);
   var elemts = Array.from(event_container.children);
-  for(let i = cycle*display; i < (cycle+1)*display; i++) {
+  for(let i = cycle*display; i < (cycle+1)*display; i++)
     if(events[i] != "")
       elemts[i % display].innerHTML=events[i];
-  }
   cycle = (cycle + 1) % sets;
 }
 
