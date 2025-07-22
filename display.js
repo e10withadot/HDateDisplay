@@ -39,14 +39,18 @@ function getClock(){
   var datetextH=formatDateH(dateH);
   var datetext=ndate+"/"+nmonth+"/"+nyear;
 
-  if(nhour == nmin){
+  var clockbox = document.getElementById('clock');
+  var clockbox = document.getElementById('clock');
+  if(nhour == nmin) {
     if(nhour == 0)
-      document.getElementById('clock').style.color = '#2352B0';
+      clockbox.style.color = '#2352B0';
       else
-      document.getElementById('clock').style.color = '#FF0000';
+      clockbox.style.color = '#FF0000';
   }
-  else document.getElementById('clock').style.color = '#000';
-  document.getElementById('clock').innerHTML=clocktext;
+  else if (document.body.classList.contains('tv'))
+    clockbox.style.color = '#fff';
+    else clockbox.style.color = '#000';
+  clockbox.innerHTML=clocktext;
   document.getElementById('day').innerHTML=daytext;
   document.getElementById('heb').innerHTML=datetextH;
   document.getElementById('greg').innerHTML=datetext;

@@ -1,17 +1,28 @@
-html *
-{
+body {
     color: #000;
+    background: #fff;
     text-align: center;
     font-size: 4.5rem;
 }
-.frontbox
-{
+
+body.tv {
+    color: #fff;
+    background: #000;
+    text-align: left;
+    font-size: 2rem;
+}
+
+.frontbox {
     float: left;
     width: 100%;
     border-bottom: 0.6rem solid #000;
 }
-.frontbox .clockbox
-{
+
+body.tv .frontbox {
+    border-bottom: none;
+}
+
+.frontbox .clockbox {
     text-align: left;
     font-size: 11rem;
     width: calc(50% - 0.6rem);
@@ -19,8 +30,15 @@ html *
     border-right: 0.6rem solid #000;
     padding-right: 3rem;
 }
-.frontbox .daybox
-{
+
+body.tv .clockbox {
+    font-size: 5rem;
+    font-weight: bold;
+    border-right: none;
+    padding-right: 0;
+}
+
+.frontbox .daybox {
     position: relative;
     display: inline-flex;
     font-weight: bold;
@@ -29,42 +47,62 @@ html *
     text-align: center;
     padding-left: 4rem;
 }
-.datebox
-{
+
+body.tv .daybox {
+    justify-content: flex-start;
+    text-align: left;
+    padding-left: 0;
+}
+
+.datebox {
     clear: both;
     border-bottom: 0.6rem solid #000;
 }
-.hebbox
-{
+
+body.tv .datebox {
+    border-bottom: none;
+}
+
+.hebbox {
     border-left: 0.6rem solid #000;
     padding-left: 1rem;
     align-items: center;
     justify-content: center;
     text-align: center;
 }
-.eventbox
-{
+
+body.tv .hebbox {
+    border-left: none;
+    padding-left: 0;
+    justify-content: flex-start;
+    text-align: left;
+}
+
+.eventbox {
     min-height: 5rem;
     line-height: 5rem;
     border-bottom: 0.6rem solid #000;
 }
-@media screen and (max-width: 51em)
-{
-    .frontbox .clockbox
-    {
-        padding: 0rem;
+
+body.tv .eventbox {
+    border-bottom: none;
+    min-height: 2.5rem;
+    line-height: 2.5rem;
+}
+
+@media screen and (max-width: 51em) {
+    .frontbox .clockbox {
+        padding: 0;
         border-right: none;
     }
-    .frontbox .daybox
-    {
+    .frontbox .daybox {
         display: flex;
-        padding-left: 0rem;
+        padding-left: 0;
         padding-bottom: 1rem;
     }
-    .hebbox
-    {
+    .hebbox {
         border-left: none;
-        padding-left: none;
+        padding-left: 0;
         display: flex;
     }
 }
