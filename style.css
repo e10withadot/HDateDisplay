@@ -97,6 +97,26 @@ body.tv .eventbox {
     line-height: 3rem;
 }
 
+#background-video
+{
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+}
+
+body.tv #background-video
+{
+  display: block;
+  opacity: 1;
+}
+
 @media screen and (max-width: 51em) {
     .frontbox .clockbox {
         padding: 0;
