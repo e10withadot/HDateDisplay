@@ -14,7 +14,7 @@ body.tv {
     font-size: 2.5rem;
 }
 
-body.tv .bottom {
+body.tv.bottom {
     height: 99vh;
     justify-content: flex-end;
 }

@@ -1,9 +1,10 @@
 var d = new Date(), interval= 60000-(d.getSeconds()*1000+d.getMilliseconds());
 var events = [];
 var cycle = 0;
+var display = 2;
+var bottom = false;
 
 const event_container = document.getElementById('evcon');
-var display = 2;
 for (let index = 0; index < display; index++) {
   var event = document.createElement('div');
   event.classList.add('eventbox');
@@ -63,6 +64,9 @@ function getClock(){
     times = "<b>כניסת שבת:</b> "+msToTime(sunset.getTime()-1200000)+" <b>צאת שבת:</b> "+msToTime(stars);
     else times = "<b>זריחה:</b> "+msToTime(sunrise)+" <b>שקיעה:</b> "+msToTime(sunset);
   events = [parasha, times, holiday, omer];
+  if (document.body.classList.contains('tv') && bottom) document.body.classList.remove('bottom');
+    else document.body.classList.add('bottom');
+  bottom = !bottom;
 }
 
 function swapEvents(){
