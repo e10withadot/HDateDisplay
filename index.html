@@ -6,24 +6,25 @@
     <title>Hebrew Date</title>
     <link rel="stylesheet" href="style.css">
   </head>
-
-  <body class="tv">
-    <span class="frontbox">
-      <span class="clockbox" id="clock"></span>
-      <span class="daybox" id="day" dir="rtl"></span>
-    </span>
-    <div class="datebox" id="date" dir="rtl">
-      <span class="hebbox" id="heb"></span>
-      <span class="gregbox" id="greg"></span>
+  <body>
+    <div class="box tv" id="main">
+      <span class="frontbox">
+        <span class="clockbox" id="clock"></span>
+        <span class="daybox" id="day" dir="rtl"></span>
+      </span>
+      <div class="datebox" id="date" dir="rtl">
+        <span class="hebbox" id="heb"></span>
+        <span class="gregbox" id="greg"></span>
+      </div>
+      <div id="evcon" dir="rtl"></div>
+      <script src="dictionaries.js"></script>
+      <script src="sunset.js"></script>
+      <script src="hebcalc.js"></script>
+      <script src="display.js"></script>
+      <video autoplay muted loop playsinline id="background-video" preload="auto">
+        <source src="stock.webm" type="video/webm" />
+        Your browser does not support the video tag.
+      </video>
     </div>
-    <div id="evcon" dir="rtl"></div>
-    <script src="dictionaries.js"></script>
-    <script src="sunset.js"></script>
-    <script src="hebcalc.js"></script>
-    <script src="display.js"></script>
-    <video autoplay muted loop playsinline id="background-video" preload="auto">
-      <source src="stock.webm" type="video/webm" />
-      Your browser does not support the video tag.
-    </video>
   </body>
 </html>

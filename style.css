@@ -1,20 +1,18 @@
-body {
+.box {
     color: #000;
-    background: #fff;
     text-align: center;
     font-size: 4.5rem;
 }
 
-body.tv {
+.box.tv {
     display: flex;
     flex-direction: column;
     color: #fff;
-    background: #000;
     text-align: left;
     font-size: 2.5rem;
 }
 
-body.tv.bottom {
+.box.tv.bottom {
     height: 99vh;
     justify-content: flex-end;
 }
@@ -25,7 +23,7 @@ body.tv.bottom {
     border-bottom: 0.6rem solid #000;
 }
 
-body.tv .frontbox {
+.box.tv .frontbox {
     border-bottom: none;
 }
 
@@ -38,7 +36,7 @@ body.tv .frontbox {
     padding-right: 3rem;
 }
 
-body.tv .clockbox {
+.box.tv .clockbox {
     font-size: 7rem;
     font-weight: bold;
     border-right: none;
@@ -55,7 +53,7 @@ body.tv .clockbox {
     padding-left: 4rem;
 }
 
-body.tv .daybox {
+.box.tv .daybox {
     justify-content: flex-start;
     text-align: left;
     padding-left: 0;
@@ -66,7 +64,7 @@ body.tv .daybox {
     border-bottom: 0.6rem solid #000;
 }
 
-body.tv .datebox {
+.box.tv .datebox {
     border-bottom: none;
 }
 
@@ -78,7 +76,7 @@ body.tv .datebox {
     text-align: center;
 }
 
-body.tv .hebbox {
+.box.tv .hebbox {
     border-left: none;
     padding-left: 0;
     justify-content: flex-start;
@@ -91,7 +89,7 @@ body.tv .hebbox {
     border-bottom: 0.6rem solid #000;
 }
 
-body.tv .eventbox {
+.box.tv .eventbox {
     border-bottom: none;
     min-height: 3rem;
     line-height: 3rem;
@@ -99,22 +97,22 @@ body.tv .eventbox {
 
 #background-video
 {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
 }
 
-body.tv #background-video
+.box.tv #background-video
 {
-  display: block;
-  opacity: 1;
+    display: block;
+    opacity: 1;
 }
 
 @media screen and (max-width: 51em) {

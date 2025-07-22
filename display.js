@@ -41,14 +41,14 @@ function getClock(){
   var datetext=ndate+"/"+nmonth+"/"+nyear;
 
   var clockbox = document.getElementById('clock');
-  var clockbox = document.getElementById('clock');
+  var box = document.getElementById('main');
   if(nhour == nmin) {
     if(nhour == 0)
       clockbox.style.color = '#2352B0';
       else
       clockbox.style.color = '#FF0000';
   }
-  else if (document.body.classList.contains('tv'))
+  else if (box.classList.contains('tv'))
     clockbox.style.color = '#fff';
     else clockbox.style.color = '#000';
   clockbox.innerHTML=clocktext;
@@ -64,8 +64,8 @@ function getClock(){
     times = "<b>כניסת שבת:</b> "+msToTime(sunset.getTime()-1200000)+" <b>צאת שבת:</b> "+msToTime(stars);
     else times = "<b>זריחה:</b> "+msToTime(sunrise)+" <b>שקיעה:</b> "+msToTime(sunset);
   events = [parasha, times, holiday, omer];
-  if (document.body.classList.contains('tv') && bottom) document.body.classList.remove('bottom');
-    else document.body.classList.add('bottom');
+  if (box.classList.contains('tv') && bottom) box.classList.remove('bottom');
+    else box.classList.add('bottom');
   bottom = !bottom;
 }
 
