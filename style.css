@@ -130,4 +130,7 @@
         padding-left: 0;
         display: flex;
     }
+    .box.tv .frontbox .daybox, .box.tv .hebbox {
+        justify-content: flex-end !important;
+    }
 }
