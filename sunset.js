@@ -1,3 +1,12 @@
+function isDST(date) {
+  // Find standard offset for this locale/year
+  const january = new Date(date.getFullYear(), 0, 1);
+  const july = new Date(date.getFullYear(), 6, 1);
+  const stdOffset = Math.max(january.getTimezoneOffset(), july.getTimezoneOffset());
+  // DST is in effect if the current date's offset is less
+  return date.getTimezoneOffset() < stdOffset;
+}
+
 function calculate(latitude, longitude, isSunrise, date) {
   const rad = Math.PI / 180;
   const deg = 180 / Math.PI;
@@ -36,7 +45,10 @@ function calculate(latitude, longitude, isSunrise, date) {
   const sunriseSetTime = new Date(date.getFullYear(), date.getMonth(), date.getDate());
   sunriseSetTime.setUTCMinutes(sunriseSetMinutes);
   // Timezone adjustment (UTC+3)
-  sunriseSetTime.setHours(sunriseSetTime.getHours()+3);
+  if (isDST(sunriseSetTime)) 
+    sunriseSetTime.setHours(sunriseSetTime.getHours()+3);
+  else
+    sunriseSetTime.setHours(sunriseSetTime.getHours()+2);
   return sunriseSetTime;
 }
 
