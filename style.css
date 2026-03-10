@@ -1,5 +1,8 @@
+body {
+    background-color: #000000;
+    color: #ffffff;
+}
 .box {
-    color: #000;
     text-align: center;
     font-size: 4.5rem;
 }
@@ -7,7 +10,7 @@
 .frontbox {
     float: left;
     width: 100%;
-    border-bottom: 0.6rem solid #000;
+    border-bottom: 0.6rem solid #ffffff;
 }
 
 .frontbox .clockbox {
@@ -15,7 +18,7 @@
     font-size: 11rem;
     width: calc(50% - 0.6rem);
     font-weight: bold;
-    border-right: 0.6rem solid #000;
+    border-right: 0.6rem solid #ffffff;
     padding-right: 3rem;
 }
 
@@ -31,11 +34,11 @@
 
 .datebox {
     clear: both;
-    border-bottom: 0.6rem solid #000;
+    border-bottom: 0.6rem solid #ffffff;
 }
 
 .hebbox {
-    border-left: 0.6rem solid #000;
+    border-left: 0.6rem solid #ffffff;
     padding-left: 1rem;
     align-items: center;
     justify-content: center;
@@ -45,7 +48,7 @@
 .eventbox {
     min-height: 5rem;
     line-height: 5rem;
-    border-bottom: 0.6rem solid #000;
+    border-bottom: 0.6rem solid #ffffff;
 }
 
 @media screen and (max-width: 51em) {

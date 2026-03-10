@@ -48,7 +48,7 @@ function getClock(){
     else
       clockbox.style.color = '#FF0000';
   }
-  else clockbox.style.color = '#000';
+  else clockbox.style.color = '#FFFFFF';
   clockbox.innerHTML=clocktext;
   document.getElementById('day').innerHTML=daytext;
   document.getElementById('heb').innerHTML=datetextH;
