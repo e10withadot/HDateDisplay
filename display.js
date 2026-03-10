@@ -45,12 +45,10 @@ function getClock(){
   if(nhour == nmin) {
     if(nhour == 0)
       clockbox.style.color = '#2352B0';
-      else
+    else
       clockbox.style.color = '#FF0000';
   }
-  else if (box.classList.contains('tv'))
-    clockbox.style.color = '#fff';
-    else clockbox.style.color = '#000';
+  else clockbox.style.color = '#000';
   clockbox.innerHTML=clocktext;
   document.getElementById('day').innerHTML=daytext;
   document.getElementById('heb').innerHTML=datetextH;
@@ -64,9 +62,6 @@ function getClock(){
     times = "<b>כניסת שבת:</b> "+msToTime(sunset.getTime()-1200000)+" <b>צאת שבת:</b> "+msToTime(stars);
     else times = "<b>זריחה:</b> "+msToTime(sunrise)+" <b>שקיעה:</b> "+msToTime(sunset);
   events = [parasha, times, holiday, omer];
-  if (box.classList.contains('tv') && bottom) box.classList.remove('bottom');
-    else box.classList.add('bottom');
-  bottom = !bottom;
 }
 
 function swapEvents(){

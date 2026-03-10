@@ -1,0 +1,32 @@
+{
+    0: {
+    "size": "large",
+    "content": [
+        {
+            "type": "clock24"
+        },
+        {
+            "type": "day"
+        },
+    ],
+}, 
+    1: {
+    "size": "small",
+    "content": [
+        {
+            "type": "dateE"
+        },
+        {
+            "type": "dateH"
+        },
+    ],
+},
+    2: {
+    "size": "small",
+    "content": [
+        {
+            "type": "parasha"
+        },
+    ],
+},
+}

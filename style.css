@@ -4,27 +4,10 @@
     font-size: 4.5rem;
 }
 
-.box.tv {
-    display: flex;
-    flex-direction: column;
-    color: #fff;
-    text-align: left;
-    font-size: 2.5rem;
-}
-
-.box.tv.bottom {
-    height: 99vh;
-    justify-content: flex-end;
-}
-
 .frontbox {
     float: left;
     width: 100%;
     border-bottom: 0.6rem solid #000;
-}
-
-.box.tv .frontbox {
-    border-bottom: none;
 }
 
 .frontbox .clockbox {
@@ -34,13 +17,6 @@
     font-weight: bold;
     border-right: 0.6rem solid #000;
     padding-right: 3rem;
-}
-
-.box.tv .clockbox {
-    font-size: 7rem;
-    font-weight: bold;
-    border-right: none;
-    padding-right: 0;
 }
 
 .frontbox .daybox {
@@ -53,19 +29,9 @@
     padding-left: 4rem;
 }
 
-.box.tv .daybox {
-    justify-content: flex-start;
-    text-align: left;
-    padding-left: 0;
-}
-
 .datebox {
     clear: both;
     border-bottom: 0.6rem solid #000;
-}
-
-.box.tv .datebox {
-    border-bottom: none;
 }
 
 .hebbox {
@@ -76,43 +42,10 @@
     text-align: center;
 }
 
-.box.tv .hebbox {
-    border-left: none;
-    padding-left: 0;
-    justify-content: flex-start;
-    text-align: left;
-}
-
 .eventbox {
     min-height: 5rem;
     line-height: 5rem;
     border-bottom: 0.6rem solid #000;
-}
-
-.box.tv .eventbox {
-    border-bottom: none;
-    min-height: 3rem;
-    line-height: 3rem;
-}
-
-#background-video
-{
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
-    z-index: -1;
-    pointer-events: none;
-    opacity: 0;
-}
-
-.box.tv #background-video
-{
-    display: block;
-    opacity: 1;
 }
 
 @media screen and (max-width: 51em) {
@@ -129,8 +62,5 @@
         border-left: none;
         padding-left: 0;
         display: flex;
-    }
-    .box.tv .frontbox .daybox, .box.tv .hebbox {
-        justify-content: flex-end !important;
     }
 }
