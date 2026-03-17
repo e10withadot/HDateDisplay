@@ -34,7 +34,7 @@ function getClock(){
   
   var clocktext=nhour+":"+twoDigit(nmin);
   var daytext="יום "+tday[nday];
-  var datemod = 1;
+  var datemod = 0;
   if (stars < d.getTime()) datemod++;
   var dateH= gregToHeb(new Date(nyear, nmonth-1, ndate+datemod));
   var datetextH=formatDateH(dateH);
@@ -98,8 +98,10 @@ function numLettr(num) {
   if(num >= 10){
     if(num==15) output+= "טו";
       else if(num==16) output+= "טז";
-        else if(num%10!=0) output+=tens[parseInt(num/10%10)-1]+ones[num%10-1];
-          else output+=tens[parseInt(num/10%10)-1];
+        else {
+          output+=tens[parseInt(num/10%10)-1]
+          if(num%10!=0) output+=ones[num%10-1];
+        } 
   }
   else output= ones[num%10-1];
   var n = output.length;
@@ -118,7 +120,7 @@ function sameDate(d1, d2) {
 // Here are a few support functions for the sample web page
 
 function formatDateH(cDate) {
-  var cFormatDate = numLettr(Number(cDate[1])) + " ב";
+  var cFormatDate = numLettr(Number(cDate[1])+1) + " ב";
   var hMonths = {
     1: "תשרי",
     2: "חשוון",
