@@ -1,32 +1,48 @@
 {
     0: {
-    "size": "large",
-    "content": [
-        {
-            "type": "clock24"
-        },
-        {
-            "type": "day"
-        },
-    ],
-}, 
+        "size": "large",
+        "content": [
+            {
+                "type": "clock24"
+            },
+            {
+                "type": "day"
+            }
+        ]
+    }, 
     1: {
-    "size": "small",
-    "content": [
-        {
-            "type": "dateE"
-        },
-        {
-            "type": "dateH"
-        },
-    ],
-},
+        "size": "small",
+        "content": [
+            {
+                "type": "dateH"
+            },
+            {
+                "type": "dateE"
+            }
+        ]
+    },
     2: {
-    "size": "small",
-    "content": [
-        {
-            "type": "parasha"
-        },
-    ],
-},
+        "size": "small",
+        "timeout": 10,
+        "content": [
+            {
+                "type": "parasha"
+            },
+            {
+                "type": "holiday"
+            }
+        ]
+    },
+    3: {
+        "size": "small",
+        "timeout": 10,
+        "content": [
+            {
+                "type": "sunset"
+            },
+            {
+                "type": "omer"
+            }
+        ]
+    }
 }

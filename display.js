@@ -3,6 +3,7 @@ var events = [];
 var cycle = 0;
 var display = 2;
 var bottom = false;
+var sunrise, sunset;
 
 const event_container = document.getElementById('evcon');
 for (let index = 0; index < display; index++) {
@@ -11,37 +12,15 @@ for (let index = 0; index < display; index++) {
   event_container.appendChild(event);
 }
 
-function getClock(){
-  d = new Date();
-  var nday=d.getDay(),nmonth=d.getMonth()+1,ndate=d.getDate(),nyear=d.getFullYear();
-  var nhour=d.getHours(),nmin=d.getMinutes(),ap;
-
-  //var tday=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-  var tday=["ראשון","שני","שלישי","רביעי","חמישי","שישי","שבת"];
-  var tmonth=["ינואר","פבואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר"];
-
+function clock24(nhour, nmin) {
   /*
-  if(nhour==0){ap=" לפני הצהריים";nhour=12;}
+    if(nhour==0){ap=" לפני הצהריים";nhour=12;}
   else if(nhour<12){ap=" לפני הצהריים";}
   else if(nhour==12){ap=" אחרי הצהריים";}
   else if(nhour>12){ap=" א";nhour-=12;}
   */
-  var latitude = coordinates['תל אביב']['latitude'];
-  var longitude = coordinates['תל אביב']['longitude'];
-  var sunrise= getSunrise(latitude, longitude, d);
-  var sunset= getSunset(latitude, longitude, d);
-  var stars = sunset.getTime()+2400000;
-  
   var clocktext=nhour+":"+twoDigit(nmin);
-  var daytext="יום "+tday[nday];
-  var datemod = 0;
-  if (stars < d.getTime()) datemod++;
-  var dateH= gregToHeb(new Date(nyear, nmonth-1, ndate+datemod));
-  var datetextH=formatDateH(dateH);
-  var datetext=ndate+"/"+nmonth+"/"+nyear;
-
   var clockbox = document.getElementById('clock');
-  var box = document.getElementById('main');
   if(nhour == nmin) {
     if(nhour == 0)
       clockbox.style.color = '#2352B0';
@@ -50,37 +29,14 @@ function getClock(){
   }
   else clockbox.style.color = '#FFFFFF';
   clockbox.innerHTML=clocktext;
+}
+
+function day(nday) {
+  // var tday=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  var tday=["ראשון","שני","שלישי","רביעי","חמישי","שישי","שבת"];
+  var daytext="יום "+tday[nday];
   document.getElementById('day').innerHTML=daytext;
-  document.getElementById('heb').innerHTML=datetextH;
-  document.getElementById('greg').innerHTML=datetext;
-
-  var parasha = weeklyParasha(findShabbat(d));
-  var holiday = holidays(dateH);
-  var omer = omerCount(dateH);
-  var times;
-  if (nday == 5 || nday == 6)
-    times = "<b>כניסת שבת:</b> "+msToTime(sunset.getTime()-1200000)+" <b>צאת שבת:</b> "+msToTime(stars);
-    else times = "<b>זריחה:</b> "+msToTime(sunrise)+" <b>שקיעה:</b> "+msToTime(sunset);
-  events = [parasha, times, holiday, omer];
 }
-
-function swapEvents(){
-  var sets = Math.floor(events.length / display);
-  var elemts = Array.from(event_container.children);
-  for(let i = cycle*display; i < (cycle+1)*display; i++)
-    if(events[i] != "")
-      elemts[i % display].innerHTML=events[i];
-  cycle = (cycle + 1) % sets;
-}
-
-getClock();
-swapEvents();
-setTimeout(function() {
-  getClock();
-  swapEvents();
-  setInterval(getClock, 60000);
-  setInterval(swapEvents, 10000);
-}, interval);
 
 function numLettr(num) {
   num%=1000;
@@ -97,19 +53,97 @@ function numLettr(num) {
   }
   if(num >= 10){
     if(num==15) output+= "טו";
-      else if(num==16) output+= "טז";
-        else {
-          output+=tens[parseInt(num/10%10)-1]
-          if(num%10!=0) output+=ones[num%10-1];
-        } 
+    else if(num==16) output+= "טז";
+    else {
+      output+=tens[parseInt(num/10%10)-1]
+      if(num%10!=0) output+=ones[num%10-1];
+    } 
   }
   else output= ones[num%10-1];
   var n = output.length;
   if(n >= 2)
     output = output.slice(0, n-1) + '"' + output.slice(n-1, n);
-    else output += "'";
+  else output += "'";
   return output
 }
+
+function hebDate(cDate) {
+  var cFormatDate = numLettr(Number(cDate[1])) + " ב";
+  var hMonths = {
+    1: "תשרי",
+    2: "חשוון",
+    3: "כסלו",
+    4: "טבת",
+    5: "שבט",
+    6: "אדר א'",
+    7: "אדר",
+    8: "ניסן",
+    9: "אייר",
+    10: "סיוון",
+    11: "תמוז",
+    12: "אב",
+    13: "אלול"
+  }
+  if(isLeapYear(Number(cDate[2])))
+    hMonths[7] += " ב'";
+  cFormatDate += hMonths[Number(cDate[0])];
+  cFormatDate += ", " + numLettr(cDate[2])
+  document.getElementById('heb').innerHTML=cFormatDate
+}
+
+function gregDate(ndate, nmonth, nyear) {
+  document.getElementById('greg').innerHTML=ndate+"/"+nmonth+"/"+nyear;
+}
+
+function displayTimes(nday) {
+  if (nday == 5 || nday == 6)
+    return "<b>כ. שבת:</b> "+msToTime(sunset.getTime()-1200000)+" <b>צ. שבת:</b> "+msToTime(sunset.getTime()+2400000);
+  return "<b>זריחה:</b> "+msToTime(sunrise)+" <b>שקיעה:</b> "+msToTime(sunset);
+}
+
+function reloadClock(){
+  d = new Date();
+  var nday=d.getDay(),nmonth=d.getMonth()+1,ndate=d.getDate(),nyear=d.getFullYear();
+  var nhour=d.getHours(),nmin=d.getMinutes(),ap;
+
+  var latitude = coordinates['תל אביב']['latitude'];
+  var longitude = coordinates['תל אביב']['longitude'];
+  sunrise= getSunrise(latitude, longitude, d);
+  sunset= getSunset(latitude, longitude, d);
+  var datemod = 1;
+  if (sunset.getTime() < d.getTime()) datemod++;
+  var dateH= gregToHeb(new Date(nyear, nmonth-1, ndate+datemod));
+
+  clock24(nhour, nmin)
+  day(nday)
+  hebDate(dateH);
+  gregDate(ndate, nmonth, nyear)
+
+  var parasha = weeklyParasha(findShabbat(d));
+  var holiday = holidays(dateH);
+  var omer = omerCount(dateH);
+  var times = displayTimes(nday);
+  events = [parasha, times, holiday, omer];
+}
+
+function swapEvents(){
+  var sets = Math.floor(events.length / display);
+  var elemts = Array.from(event_container.children);
+  for(let i = cycle*display; i < (cycle+1)*display; i++)
+    if(events[i] != "")
+      elemts[i % display].innerHTML=events[i];
+  cycle = (cycle + 1) % sets;
+}
+
+reloadClock();
+swapEvents();
+setTimeout(function() {
+  reloadClock();
+  swapEvents();
+  setInterval(reloadClock, 60000);
+  setInterval(swapEvents, 10000);
+}, interval);
+
 
 function sameDate(d1, d2) {
   return (d1.getFullYear() == d2.getFullYear() && 
@@ -150,12 +184,12 @@ function getYearType(year)
   if(isLeapYear(year)) {
     if(length == 383) return 'miss';
     if(length == 384) return 'norm';
-      else return 'full';
+    else return 'full';
   }
   else {
     if(length == 353) return 'miss';
     if(length == 354) return 'norm';
-      else return 'full';
+    else return 'full';
   }
 }
 
@@ -163,7 +197,7 @@ function twoDigit(num)
 {
   if (num<=9)
     return "0"+num.toString();
-    else return num;
+  else return num;
 }
 
 function findShabbat(date){
@@ -203,7 +237,7 @@ function checkHDate(dateH, log){
   var day = dateH[1];
 
   if(month in log && day in log[month])
-      return log[month][day];
+    return log[month][day];
   return "";
 }
 
