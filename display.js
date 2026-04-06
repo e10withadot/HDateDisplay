@@ -32,39 +32,11 @@ function clock24(nhour, nmin) {
 }
 
 function day(nday) {
+  var daytext="יום "
+  if (sunset.getTime() < d.getTime()) daytext = "ליל "
   // var tday=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   var tday=["ראשון","שני","שלישי","רביעי","חמישי","שישי","שבת"];
-  var daytext="יום "+tday[nday];
-  document.getElementById('day').innerHTML=daytext;
-}
-
-function numLettr(num) {
-  num%=1000;
-  var ones=["א","ב","ג","ד","ה","ו","ז","ח","ט"];
-  var tens=["י","כ","ל","מ","נ","ס","ע","פ","צ"];
-  var huns=["ק","ר","ש","ת"];
-  var output="";
-  var c=parseInt(num/400);
-  if(num >= 100){
-    for (var i = 0; i < c; i++) { 
-      output+=huns[3];
-    }
-    output+=huns[parseInt(num/100-4*c)-1];
-  }
-  if(num >= 10){
-    if(num==15) output+= "טו";
-    else if(num==16) output+= "טז";
-    else {
-      output+=tens[parseInt(num/10%10)-1]
-      if(num%10!=0) output+=ones[num%10-1];
-    } 
-  }
-  else output= ones[num%10-1];
-  var n = output.length;
-  if(n >= 2)
-    output = output.slice(0, n-1) + '"' + output.slice(n-1, n);
-  else output += "'";
-  return output
+  document.getElementById('day').innerHTML=daytext+tday[nday];
 }
 
 function hebDate(cDate) {
@@ -99,6 +71,56 @@ function displayTimes(nday) {
   if (nday == 5 || nday == 6)
     return "<b>כ. שבת:</b> "+msToTime(sunset.getTime()-1200000)+" <b>צ. שבת:</b> "+msToTime(sunset.getTime()+2400000);
   return "<b>זריחה:</b> "+msToTime(sunrise)+" <b>שקיעה:</b> "+msToTime(sunset);
+}
+
+function omerCount(date){
+  var month = date[0];
+  var day = date[1];
+  if(month < 8 || month > 10)
+    return "";
+  if(month == 8) {
+    count = day - 15;
+  }
+  else if(month == 9) {
+    count = day + 15;
+  }
+  else count = day + 44;
+  if (count > 49 || count < 1)
+    return "";
+  return numLettr(count) + " בעומר";
+}
+
+function holidays(date){
+  var condition = getYearType(date[2]);
+  if(condition != 'miss'){
+    holidayData[4][1] = 'חנוכה - נר שביעי';
+    holidayData[4][2] = 'חנוכה - נר שמיני';
+  }
+  else {
+    holidayData[4][1] = 'חנוכה - נר שישי';
+    holidayData[4][2] = 'חנוכה - נר שביעי';
+    holidayData[4][3] = 'חנוכה - נר שמיני';
+  }
+  return checkHDate(date, holidayData);
+}
+
+function weeklyParasha(date){
+  if(date[0] == 1 && date[1] <= 22){
+    date[2] -=1;
+    parashot[1] = parashot[14];
+  }
+  var year = date[2];
+  var week = ["a", "b", "c", "d", "e", "f", "s"];
+  // get day of tishrei 1
+  var config = week[tishrei1(year).getDay()];
+  // get year type
+  config += getYearType(year).substring(0, 1);
+  // get day of passover
+  config += week[hebToGreg(year, 8, 15).getDay()];
+  var par = checkHDate(date, parashot[config]);
+  if (par)
+    return "פרשת " + par;
+  return "";
 }
 
 function reloadClock(){
@@ -152,6 +174,35 @@ function sameDate(d1, d2) {
 }
 
 // Here are a few support functions for the sample web page
+
+function numLettr(num) {
+  num%=1000;
+  var ones=["א","ב","ג","ד","ה","ו","ז","ח","ט"];
+  var tens=["י","כ","ל","מ","נ","ס","ע","פ","צ"];
+  var huns=["ק","ר","ש","ת"];
+  var output="";
+  var c=parseInt(num/400);
+  if(num >= 100){
+    for (var i = 0; i < c; i++) { 
+      output+=huns[3];
+    }
+    output+=huns[parseInt(num/100-4*c)-1];
+  }
+  if(num >= 10){
+    if(num==15) output+= "טו";
+    else if(num==16) output+= "טז";
+    else {
+      output+=tens[parseInt(num/10%10)-1]
+      if(num%10!=0) output+=ones[num%10-1];
+    } 
+  }
+  else output= ones[num%10-1];
+  var n = output.length;
+  if(n >= 2)
+    output = output.slice(0, n-1) + '"' + output.slice(n-1, n);
+  else output += "'";
+  return output
+}
 
 function formatDateH(cDate) {
   var cFormatDate = numLettr(Number(cDate[1])+1) + " ב";
@@ -215,61 +266,11 @@ function msToTime(ms)
   return hours+":"+minutes;
 }
 
-function omerCount(date){
-  var month = date[0];
-  var day = date[1];
-  if(month < 8 || month > 10)
-    return "";
-  if(month == 8) {
-    count = day - 15;
-  }
-  else if(month == 9) {
-    count = day + 15;
-  }
-  else count = day + 44;
-  if (count > 49 || count < 1)
-    return "";
-  return numLettr(count) + " בעומר";
-}
-
 function checkHDate(dateH, log){
   var month = dateH[0];
   var day = dateH[1];
 
   if(month in log && day in log[month])
     return log[month][day];
-  return "";
-}
-
-function holidays(date){
-  var condition = getYearType(date[2]);
-  if(condition != 'miss'){
-    holidayData[4][1] = 'חנוכה - נר שביעי';
-    holidayData[4][2] = 'חנוכה - נר שמיני';
-  }
-  else {
-    holidayData[4][1] = 'חנוכה - נר שישי';
-    holidayData[4][2] = 'חנוכה - נר שביעי';
-    holidayData[4][3] = 'חנוכה - נר שמיני';
-  }
-  return checkHDate(date, holidayData);
-}
-
-function weeklyParasha(date){
-  if(date[0] == 1 && date[1] <= 22){
-    date[2] -=1;
-    parashot[1] = parashot[14];
-  }
-  var year = date[2];
-  var week = ["a", "b", "c", "d", "e", "f", "s"];
-  // get day of tishrei 1
-  var config = week[tishrei1(year).getDay()];
-  // get year type
-  config += getYearType(year).substring(0, 1);
-  // get day of passover
-  config += week[hebToGreg(year, 8, 15).getDay()];
-  var par = checkHDate(date, parashot[config]);
-  if (par)
-    return "פרשת " + par;
   return "";
 }
