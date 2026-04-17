@@ -33,7 +33,10 @@ function clock24(nhour, nmin) {
 
 function day(nday) {
   var daytext="יום "
-  if (sunset.getTime() < d.getTime()) daytext = "ליל "
+  if (sunset.getTime() < d.getTime()) {
+    daytext = "ליל "
+    nday += 1
+  }
   // var tday=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   var tday=["ראשון","שני","שלישי","רביעי","חמישי","שישי","שבת"];
   document.getElementById('day').innerHTML=daytext+tday[nday];
