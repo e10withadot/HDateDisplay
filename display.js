@@ -40,7 +40,7 @@ function day(nday) {
 }
 
 function hebDate(cDate) {
-  var cFormatDate = numLettr(Number(cDate[1])) + " ב";
+  var cFormatDate = numLettr(Number(cDate[1])+1) + " ב";
   var hMonths = {
     1: "תשרי",
     2: "חשוון",
@@ -69,8 +69,8 @@ function gregDate(ndate, nmonth, nyear) {
 
 function displayTimes(nday) {
   if (nday == 5 || nday == 6)
-    return "<b>כ. שבת:</b> "+msToTime(sunset.getTime()-1200000)+" <b>צ. שבת:</b> "+msToTime(sunset.getTime()+2400000);
-  return "<b>זריחה:</b> "+msToTime(sunrise)+" <b>שקיעה:</b> "+msToTime(sunset);
+    return "<b>כ. שבת</b> "+msToTime(sunset.getTime()-1200000)+" <b>צ. שבת</b> "+msToTime(sunset.getTime()+2400000);
+  return "<b>זריחה</b> "+msToTime(sunrise)+" <b>שקיעה</b> "+msToTime(sunset);
 }
 
 function omerCount(date){
@@ -132,7 +132,7 @@ function reloadClock(){
   var longitude = coordinates['תל אביב']['longitude'];
   sunrise= getSunrise(latitude, longitude, d);
   sunset= getSunset(latitude, longitude, d);
-  var datemod = 1;
+  var datemod = 0;
   if (sunset.getTime() < d.getTime()) datemod++;
   var dateH= gregToHeb(new Date(nyear, nmonth-1, ndate+datemod));
 
@@ -196,36 +196,12 @@ function numLettr(num) {
       if(num%10!=0) output+=ones[num%10-1];
     } 
   }
-  else output= ones[num%10-1];
+  else if (num > 0) output= ones[num%10-1];
   var n = output.length;
   if(n >= 2)
     output = output.slice(0, n-1) + '"' + output.slice(n-1, n);
   else output += "'";
   return output
-}
-
-function formatDateH(cDate) {
-  var cFormatDate = numLettr(Number(cDate[1])+1) + " ב";
-  var hMonths = {
-    1: "תשרי",
-    2: "חשוון",
-    3: "כסלו",
-    4: "טבת",
-    5: "שבט",
-    6: "אדר א'",
-    7: "אדר",
-    8: "ניסן",
-    9: "אייר",
-    10: "סיוון",
-    11: "תמוז",
-    12: "אב",
-    13: "אלול"
-  }
-  if(isLeapYear(Number(cDate[2])))
-    hMonths[7] += " ב'";
-  cFormatDate += hMonths[Number(cDate[0])];
-  cFormatDate += ", " + numLettr(cDate[2])
-  return cFormatDate
 }
 
 function getYearType(year) 
