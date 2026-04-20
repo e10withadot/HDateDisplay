@@ -35,7 +35,7 @@ function day(nday) {
   var daytext="יום "
   if (sunset.getTime() < d.getTime()) {
     daytext = "ליל "
-    nday += 1
+    nday = (nday+1)%6
   }
   // var tday=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   var tday=["ראשון","שני","שלישי","רביעי","חמישי","שישי","שבת"];
@@ -78,7 +78,7 @@ function displayTimes(nday) {
 
 function omerCount(date){
   var month = date[0];
-  var day = date[1];
+  var day = date[1]+1;
   if(month < 8 || month > 10)
     return "";
   if(month == 8) {
@@ -108,7 +108,7 @@ function holidays(date){
 }
 
 function weeklyParasha(date){
-  if(date[0] == 1 && date[1] <= 22){
+  if(date[0] == 1 && date[1]+1 <= 22){
     date[2] -=1;
     parashot[1] = parashot[14];
   }
