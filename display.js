@@ -43,7 +43,7 @@ function day(nday) {
 }
 
 function hebDate(cDate) {
-  var cFormatDate = numLettr(Number(cDate[1])+1) + " ב";
+  var cFormatDate = numLettr(Number(cDate[1])) + " ב";
   var hMonths = {
     1: "תשרי",
     2: "חשוון",
@@ -78,7 +78,7 @@ function displayTimes(nday) {
 
 function omerCount(date){
   var month = date[0];
-  var day = date[1]+1;
+  var day = date[1];
   if(month < 8 || month > 10)
     return "";
   if(month == 8) {
@@ -108,7 +108,7 @@ function holidays(date){
 }
 
 function weeklyParasha(date){
-  if(date[0] == 1 && date[1]+1 <= 22){
+  if(date[0] == 1 && date[1] <= 22){
     date[2] -=1;
     parashot[1] = parashot[14];
   }
@@ -234,6 +234,7 @@ function findShabbat(date){
   date.setHours(12);
   var timeToShabbat = 6 - date.getDay();
   var newdate = new Date(date.setDate(date.getDate() + timeToShabbat));
+  newdate.setHours(0, 0, 0, 0);
   return gregToHeb(newdate);
 }
 
