@@ -331,7 +331,7 @@ function gregToHeb(dGreg) {
   if (sameDate(dTishrei1, dGreg)) {
     // If we got lucky and landed on the exact date, we can stop here
     nMonthH = 1
-    nDateH = 1
+    nDateH = 0
   }
   else  {
     // Here is the brute force.  Either count up or count down nYearH
@@ -382,24 +382,15 @@ function gregToHeb(dGreg) {
     if(bHaser) monthN[3] = 29;
     do {
       nMonthLen = monthN[nMonthH];
-
       if (nDateH >= nMonthLen) {
-        bWhile = true
         if (bLeap || nMonthH != 5) {
-          nMonthH ++
-        }
-        else {
-          // We can skip Adar A (6) if its not a leap year
+          nMonthH++
+        } else {
           nMonthH += 2
         }
         nDateH -= nMonthLen
       }
-      else {
-        bWhile = false
-      }
-    } while (bWhile)
-    //Add the remaining days to Date
-    nDateH = nDateH
+    } while (nDateH >= monthN[nMonthH])
   }
-  return [nMonthH , nDateH , nYearH]
+  return [nMonthH, nDateH + 1, nYearH]
 }
