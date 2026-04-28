@@ -35,7 +35,7 @@ function day(nday) {
   var daytext="יום "
   if (sunset.getTime() < d.getTime()) {
     daytext = "ליל "
-    nday = (nday+1)%6
+    nday = (nday+1)%7
   }
   // var tday=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   var tday=["ראשון","שני","שלישי","רביעי","חמישי","שישי","שבת"];
